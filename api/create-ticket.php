@@ -10,8 +10,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Ingressos e Lotes</title>
-    <link rel="stylesheet" href="../css/create-ticket.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
+
 </head>
 
 <body>
@@ -27,10 +26,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
     </div>
 
 
-
-
-    
-    <form id="create-form" action="process-create.php" method="POST">
+    <form id="create-form" action="process-ticket.php" method="POST">
         <h4>Criar Ingressos e Lotes</h4>
         <div id="tickets-container">
             <!-- Campos para criar ingressos -->

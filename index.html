@@ -1,23 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Painel do produtor" />
+    <meta name="author" content="Marco Nascimento" />
+    <title>Bem-vindo(a), Produtor(a)</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css " rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: rgb(235, 235, 235);
+        }
+        .section-spacing {
+        margin-right: 50px; /* Ajuste este valor conforme necessário */
+    }
+    </style>
+
 </head>
+
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form action="api/login.php" method="POST">
-            <label for="email">Email:</label>
-            <input type="email" name="email" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" name="password" required>
-            
-            <button type="submit">Login</button>
-        </form>
-    </div>
+    <section class="py-5 section-spacing" >
+        <div class="row justify-content-center"></div>
+        <div class="wrapper">
+            <div class="form-inner">
+                <img src="img/image-structure.png" alt="Banner 1"
+                style="border-radius: 10px; height: 400px;">
+                
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="row justify-content-center">
+        <div class="wrapper">
+            <div class="form-inner" style="height: 400px; ">
+                <h3>Entre com seu acesso!</h3>
+                <form class="login" action="api/login.php" method="POST">
+                    <div class="field">
+                        <input type="email" name="email" required>
+                    </div>
+
+                    <div class="field">
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="field custom-btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Entrar">
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </section>
 </body>
+
 </html>

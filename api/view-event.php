@@ -2,6 +2,7 @@
 session_start();
 require_once('conn.php');
 
+
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['tenant_id'])) {
     header('Location: login.php'); // Redireciona para a página de login se não estiver autenticado
@@ -23,7 +24,7 @@ $stmt->bind_param("i", $tenant_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Exibe a lista de eventos
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,30 +33,6 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Filtro de eventos</title>
-    <link rel="stylesheet" href="../css/create-event.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-
-    <style>
-        .content {
-            width: 80%;
-            margin: auto;
-        }
-
-        .event-container {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .event-title {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .event-description {
-            color: #666;
-        }
-    </style>
 
 </head>
 
@@ -70,7 +47,6 @@ $result = $stmt->get_result();
         <a href="create-event.php">Criar evento</a>
         <a href="view-event.php">Filtro de eventos</a>
         <a href="#">Página 3</a>
-        <!-- Adicione mais links ou botões conforme necessário -->
     </div>
 
     <div class="content">
@@ -80,15 +56,16 @@ $result = $stmt->get_result();
                 <li>
                     <div class="event-container">
                         <div class="event-title">
-                            <strong>
-                                <?php echo $row['title']; ?>
-                            </strong>
+                            <!-- Adicione uma tag img para exibir a imagem -->
+                            <img src="data:image/webp;base64,<?php echo $row['image_event']; ?>">
                         </div>
                         <div class="event-description">
                             <p>
+                                <strong>
+                                    <?php echo $row['title']; ?>
+                                </strong>
                                 <?php echo $row['description']; ?>
                             </p>
-
                         </div>
                     </div>
                 </li>

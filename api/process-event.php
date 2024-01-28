@@ -18,6 +18,13 @@ $local_city = $_POST['local_city'];
 $local_uf = $_POST['local_uf'];
 $complement = $_POST['complement'];
 
+
+$image = $_FILES['image_event']['tmp_name'];  // Certifique-se de que o nome do campo está correto
+
+// Ler o arquivo e converter a imagem em base64
+$image_content = file_get_contents($image);
+$image_base64 = base64_encode($image_content);
+
 $sql = "INSERT INTO Events (tenant_id,
                             title, 
                             description, 
@@ -29,7 +36,8 @@ $sql = "INSERT INTO Events (tenant_id,
                             local_number, 
                             local_city, 
                             local_uf, 
-                            complement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            complement,
+                            image_event) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
@@ -38,7 +46,7 @@ if (!$stmt) {
 }
 
 // Bind parameters
-$stmt->bind_param("ssssssssssss", $tenant_id, $title, $description, $nome_local, $data_hour, $local_cep, $local_street, $local_neighborhood, $local_number, $local_city, $local_uf, $complement);
+$stmt->bind_param("sssssssssssss", $tenant_id, $title, $description, $nome_local, $data_hour, $local_cep, $local_street, $local_neighborhood, $local_number, $local_city, $local_uf, $complement, $image_base64);
 
 // Execute statement
 $result = $stmt->execute();
