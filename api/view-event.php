@@ -22,7 +22,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -81,9 +81,8 @@ $result = $stmt->get_result();
                 </div>
             </li>
 
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider"> <!-- Separar componentes -->
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Ações
             </div>

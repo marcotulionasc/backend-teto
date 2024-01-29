@@ -5,7 +5,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
