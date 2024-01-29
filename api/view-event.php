@@ -2,20 +2,17 @@
 session_start();
 require_once('conn.php');
 
-
-// Verifica se o usuário está autenticado
+// Caso não tenha login, redireciona para a página de login
 if (!isset($_SESSION['tenant_id'])) {
-    header('Location: ../index.html'); // Redireciona para a página de login se não estiver autenticado
+    header('Location: ../index.html');
     exit();
 }
 
 $tenant_id = $_SESSION['tenant_id'];
 
-// Consulta SQL para recuperar informações do evento
 $sql = "SELECT * FROM Events WHERE tenant_id = ? AND events_active = 1";
 $stmt = $conn->prepare($sql);
 
-// Verifica se a preparação da consulta foi bem-sucedida
 if (!$stmt) {
     die("Erro na preparação da consulta: " . $conn->error);
 }
@@ -23,7 +20,6 @@ if (!$stmt) {
 $stmt->bind_param("i", $tenant_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
