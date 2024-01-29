@@ -1,5 +1,28 @@
 <?php
 session_start();
+require_once('conn.php');
+
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['tenant_id'])) {
+    header('Location: ../index.html'); // Redireciona para a página de login se não estiver autenticado
+    exit();
+}
+
+$tenant_id = $_SESSION['tenant_id'];
+
+// Consulta SQL para recuperar informações do evento
+$sql = "SELECT * FROM Events WHERE tenant_id = ? AND events_active = 1";
+$stmt = $conn->prepare($sql);
+
+// Verifica se a preparação da consulta foi bem-sucedida
+if (!$stmt) {
+    die("Erro na preparação da consulta: " . $conn->error);
+}
+
+$stmt->bind_param("i", $tenant_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +44,7 @@ session_start();
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon">
                     <!-- Logo -->
                 </div>
@@ -76,7 +99,7 @@ session_start();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="create-event.php">Eventos ativos</a>
+                        <a class="collapse-item" href="view-event copy.php">Eventos ativos</a>
                         <a class="collapse-item" href="#">Excluir evento</a>
                         <a class="collapse-item" href="#">Ingressos e lotes ativos</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
@@ -151,17 +174,17 @@ session_start();
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="alertsDropdown">
                             <h6 class="dropdown-header">
-                                Alerts Center
+                                Notificações de pagamentos confirmados
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                    <div class="icon-circle bg-success">
+                                        <i class="fas fa-donate text-white"></i>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    <div class="small text-gray-500">28/01/2024 20:59 MAR** *******</div>
+                                    <span class="font-weight-bold">Comprou o ingresso Fronstage do Restart</span>
                                 </div>
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -171,8 +194,8 @@ session_start();
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
+                                    <div class="small text-gray-500">29/01/2024 20:59 GI***** *******</div>
+                                    <span class="font-weight-bold">Aguardando pagamento para ingresso Fronstage do Restart</span>
                                 </div>
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -182,11 +205,11 @@ session_start();
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
+                                <div class="small text-gray-500">28/01/2024 20:59 CRI**** *******</div>
+                                    <span class="font-weight-bold">Comprou o ingresso Pista do Restart</span>
                                 </div>
                             </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Todas notificações</a>
                         </div>
                     </li>
 
@@ -202,7 +225,7 @@ session_start();
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="messagesDropdown">
                             <h6 class="dropdown-header">
-                                Message Center
+                                Cadastros de usuários
                             </h6>
                             <a class="dropdown-item d-flex align-items-center" href="#">
                                 <div class="dropdown-list-image mr-3">
@@ -210,9 +233,8 @@ session_start();
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.</div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    <div class="text-truncate">Usuário cadastrado e pronto para validação do documento</div>
+                                    <div class="small text-gray-500">Marco Nascimento · 58m</div>
                                 </div>
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -221,9 +243,8 @@ session_start();
                                     <div class="status-indicator"></div>
                                 </div>
                                 <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?</div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    <div class="text-truncate">Usuário cadastrado e pronto para validação do documento</div>
+                                    <div class="small text-gray-500">Giovana Zancani · 1d</div>
                                 </div>
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -232,9 +253,8 @@ session_start();
                                     <div class="status-indicator bg-warning"></div>
                                 </div>
                                 <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!</div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    <div class="text-truncate">Usuário cadastrado e pronto para validação do documento</div>
+                                    <div class="small text-gray-500">Yuri Alberto · 2d</div>
                                 </div>
                             </a>
                             <a class="dropdown-item d-flex align-items-center" href="#">
@@ -244,12 +264,11 @@ session_start();
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...</div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    <div class="text-truncate">Usuário cadastrado e pronto para validação do documento.</div>
+                                    <div class="small text-gray-500">Selena Gomez · 2w</div>
                                 </div>
                             </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Ler todas mensagens</a>
                         </div>
                     </li>
 
@@ -292,19 +311,7 @@ session_start();
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <select>
-                        <option value="1">Selecione o evento</option>
-                        <option value="2">Evento 1</option>
-                        <option value="3">Evento 2</option>
-                        <option value="4">Evento 3</option>
-                        <option value="5">Evento 4</option>
-                    </select>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                </div>
+               
 
                 <!-- Content Row -->
                 <div class="row">
@@ -316,8 +323,8 @@ session_start();
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Earnings (Monthly)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            Faturamento evento Restart</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">R$ 200.000,00</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -334,8 +341,8 @@ session_start();
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Earnings (Annual)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                           Faturamento 2024</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">R$ 1.500.000,00</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -351,16 +358,16 @@ session_start();
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Meta faturamento anual
                                         </div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
                                             </div>
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
                                                     <div class="progress-bar bg-info" role="progressbar"
-                                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                        style="width: 70%" aria-valuenow="70" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -381,8 +388,8 @@ session_start();
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Pending Requests</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            Solicitações pendentes</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -402,7 +409,7 @@ session_start();
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Visão geral de lucros</h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -410,11 +417,11 @@ session_start();
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Dropdown Header:</div>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <div class="dropdown-header">Ações:</div>
+                                        <a class="dropdown-item" href="#">Mês com maior ganho</a>
+                                        <a class="dropdown-item" href="#">Mês com menor ganho</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <a class="dropdown-item" href="#">Atualizar gráfico</a>
                                     </div>
                                 </div>
                             </div>
@@ -432,7 +439,7 @@ session_start();
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Instagram do evento</h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -440,11 +447,11 @@ session_start();
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Dropdown Header:</div>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <div class="dropdown-header">Ações:</div>
+                                        <a class="dropdown-item" href="#">Likes</a>
+                                        <a class="dropdown-item" href="#">Comentários</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <a class="dropdown-item" href="#">Novos seguidores</a>
                                     </div>
                                 </div>
                             </div>
@@ -455,13 +462,13 @@ session_start();
                                 </div>
                                 <div class="mt-4 text-center small">
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> Direct
+                                        <i class="fas fa-circle text-primary"></i> Comentários
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> Social
+                                        <i class="fas fa-circle text-success"></i> Novos seguidores
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-info"></i> Referral
+                                        <i class="fas fa-circle text-info"></i> Likes
                                     </span>
                                 </div>
                             </div>
@@ -478,34 +485,35 @@ session_start();
                         <!-- Project Card Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Eventos em andamento</h6>
                             </div>
                             <div class="card-body">
-                                <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span>
+                           
+                                <h4 class="small font-weight-bold">Nome evento <span class="float-right">20%</span>
                                 </h4>
                                 <div class="progress mb-4">
                                     <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span>
+                                <h4 class="small font-weight-bold">Nome evento <span class="float-right">40%</span>
                                 </h4>
                                 <div class="progress mb-4">
                                     <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <h4 class="small font-weight-bold">Customer Database <span
+                                <h4 class="small font-weight-bold">Nome evento <span
                                         class="float-right">60%</span></h4>
                                 <div class="progress mb-4">
                                     <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span>
+                                <h4 class="small font-weight-bold">Nome evento<span class="float-right">80%</span>
                                 </h4>
                                 <div class="progress mb-4">
                                     <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
                                         aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <h4 class="small font-weight-bold">Account Setup <span
+                                <h4 class="small font-weight-bold">Nome evento <span
                                         class="float-right">Complete!</span></h4>
                                 <div class="progress">
                                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
@@ -513,77 +521,8 @@ session_start();
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Color System -->
-                        <div class="row">
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-primary text-white shadow">
-                                    <div class="card-body">
-                                        Primary
-                                        <div class="text-white-50 small">#4e73df</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-success text-white shadow">
-                                    <div class="card-body">
-                                        Success
-                                        <div class="text-white-50 small">#1cc88a</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-info text-white shadow">
-                                    <div class="card-body">
-                                        Info
-                                        <div class="text-white-50 small">#36b9cc</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-warning text-white shadow">
-                                    <div class="card-body">
-                                        Warning
-                                        <div class="text-white-50 small">#f6c23e</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-danger text-white shadow">
-                                    <div class="card-body">
-                                        Danger
-                                        <div class="text-white-50 small">#e74a3b</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-secondary text-white shadow">
-                                    <div class="card-body">
-                                        Secondary
-                                        <div class="text-white-50 small">#858796</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-light text-black shadow">
-                                    <div class="card-body">
-                                        Light
-                                        <div class="text-black-50 small">#f8f9fc</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card bg-dark text-white shadow">
-                                    <div class="card-body">
-                                        Dark
-                                        <div class="text-white-50 small">#5a5c69</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+                       
+                        
                     <div class="col-lg-6 mb-4">
 
                         <!-- Illustrations -->

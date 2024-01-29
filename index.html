@@ -4,60 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Painel do produtor" />
-    <meta name="author" content="Marco Nascimento" />
-    <title>Bem-vindo(a), Produtor(a)</title>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <link type="text/css " rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
+    <title>Login</title>
     <style>
         body {
-            background-color: rgb(235, 235, 235);
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #fffefe;
         }
-        .section-spacing {
-        margin-right: 50px; /* Ajuste este valor conforme necessário */
-    }
-    </style>
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fffafa;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .login-image {
+            flex: 1;
+            overflow: hidden;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .login-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-form {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            background-color: #0038df;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-    <section class="py-5 section-spacing" >
-        <div class="row justify-content-center"></div>
-        <div class="wrapper">
-            <div class="form-inner">
-                <img src="img/image-structure.png" alt="Banner 1"
-                style="border-radius: 10px; height: 400px;">
-                
+    <div class="container">
+        <div class="login-container">
+            <div class="login-image">
+                <img src="img/image-structure.png" alt="Login Image">
             </div>
-        </div>
-        </div>
-    </section>
-
-    <section class="py-5">
-        <div class="row justify-content-center">
-        <div class="wrapper">
-            <div class="form-inner" style="height: 400px; ">
-                <h3>Entre com seu acesso!</h3>
+            <div class="login-form">
+                <h2>Login</h2>
                 <form class="login" action="api/login.php" method="POST">
-                    <div class="field">
-                        <input type="email" name="email" required>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
-
-                    <div class="field">
-                        <input type="password" name="password" required>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
                     </div>
-                    <div class="field custom-btn">
-                        <div class="btn-layer"></div>
-                        <input type="submit" value="Entrar">
+                    <div class="form-group">
+                        <button type="submit">Login</button>
                     </div>
                 </form>
             </div>
         </div>
-        </div>
-    </section>
+    </div>
 </body>
-
 </html>

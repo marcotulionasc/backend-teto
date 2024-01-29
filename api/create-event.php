@@ -1,5 +1,15 @@
 <?php
 session_start();
+require_once('conn.php');
+
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['tenant_id'])) {
+    header('Location: ../index.html'); // Redireciona para a página de login se não estiver autenticado
+    exit();
+}
+
+$tenant_id = $_SESSION['tenant_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +32,7 @@ session_start();
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon">
                     <!-- Logo -->
                 </div>

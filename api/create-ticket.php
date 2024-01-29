@@ -1,4 +1,5 @@
 <?php
+
 if (session_id() == '' || !isset($_SESSION['id_event'])) {
     session_start();
 }
@@ -24,7 +25,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
                 <div class="sidebar-brand-icon">
                     <!-- Logo -->
                 </div>
