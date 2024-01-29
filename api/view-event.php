@@ -41,6 +41,8 @@ $result = $stmt->get_result();
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/card-event.css">
+    <link rel="stylesheet" href="../css/card-event-custom.css">
 </head>
 
 <body id="page-top">
@@ -321,34 +323,44 @@ $result = $stmt->get_result();
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
 
-                        <div class="content">
-                            <h2>Listagem de Eventos</h2>
-                            <ul>
-                                <?php while ($row = $result->fetch_assoc()): ?>
-                                    <li>
-                                        <div class="event-container">
-                                            <div class="event-title">
-                                                <img src="data:image/webp;base64,<?php echo $row['image_event']; ?>">
-                                            </div>
-                                            <div class="event-description">
-                                                <p>
-                                                    <strong>
-                                                        <?php echo $row['title']; ?>
-                                                    </strong>
-                                                    <?php echo $row['description']; ?>
-                                                </p>
-                                            </div>
+                <h2 style="margin-left: 20px">Meus eventos</h2>
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center">
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <div class="col mb-5">
+                                <div class="card h-100 shadow-lg shadow-lg">
+                                    <!-- Imagem evento-->
+                                    <img class="card-img-top"
+                                        src="data:image/webp;base64,<?php echo $row['image_event']; ?>" alt="..."
+                                        style="max-width: 450px; max-height: 300px;" />
+                                    <!-- Detalhe do evento-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="fw-bolder">
+                                                <?php echo $row['title']; ?>
+                                            </h5>
+                                            <i class="fas fa-calendar" style="font-size: smaller;"></i>
+                                            <label style="font-size: smaller;">
+                                                <?php echo $row['date_hour']; ?>
+                                            </label> <br>
+                                            <i class="fas fa-map-marker-alt" style="font-size: smaller;"></i>
+                                            <label style="font-size: smaller;">
+                                                <?php echo $row['local_name']; ?>
+                                            </label>
                                         </div>
-                                    </li>
-                                <?php endwhile; ?>
-                            </ul>
-                        </div>
+                                    </div>
+                                    <!-- Botão Compra-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                href="event-details.php">Ver mais</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
-
 
                 <script>
                     document.getElementById('add-ticket').addEventListener('click', function () {

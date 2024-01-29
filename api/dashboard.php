@@ -99,7 +99,7 @@ $result = $stmt->get_result();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="view-event copy.php">Eventos ativos</a>
+                        <a class="collapse-item" href="view-event.php">Eventos ativos</a>
                         <a class="collapse-item" href="#">Excluir evento</a>
                         <a class="collapse-item" href="#">Ingressos e lotes ativos</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
