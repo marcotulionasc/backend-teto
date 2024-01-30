@@ -318,14 +318,14 @@ $result = $stmt->get_result();
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-
                 <h2 style="margin-left: 20px">Meus eventos</h2>
                 <div class="container px-4 px-lg-5 mt-5">
                     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center">
                         <?php while ($row = $result->fetch_assoc()): ?>
                             <div class="col mb-5">
                                 <div class="card h-100 shadow-lg shadow-lg">
-                                    <!-- Imagem evento-->
+                                    <!-- Imagem evento
+                                    <input type="hidden" name="image_event" value="<?php echo $row['id_event']; ?>">-->
                                     <img class="card-img-top"
                                         src="data:image/webp;base64,<?php echo $row['image_event']; ?>" alt="..."
                                         style="max-width: 450px; max-height: 300px;" />
@@ -348,7 +348,7 @@ $result = $stmt->get_result();
                                     <!-- Botão Compra-->
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                href="event-details.php">Ver mais</a>
+                                                href="event-details.php?id=<?php echo $row['id_event']; ?>">Ver mais</a>
                                         </div>
                                     </div>
                                 </div>
@@ -356,67 +356,6 @@ $result = $stmt->get_result();
                         <?php endwhile; ?>
                     </div>
                 </div>
-
-                <script>
-                    document.getElementById('add-ticket').addEventListener('click', function () {
-                        var ticketsContainer = document.getElementById('tickets-container');
-                        var ticketCount = ticketsContainer.querySelectorAll('.ticket').length;
-
-                        var newTicket = document.createElement('div');
-                        newTicket.classList.add('ticket');
-                        newTicket.innerHTML = `
-            <label for="nome_ingresso">Nome do Ingresso:</label>
-            <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" required>
-           
-            <label for="start_date">Data de Início:</label>
-            <input type="datetime-local" name="ingressos[${ticketCount}][start_date]" required>
-            <label for="end_date">Data de Fim:</label>
-            <input type="datetime-local" name="ingressos[${ticketCount}][end_date]" required>
-
-            <div class="lots-container">
-                <div class="lot">
-                    <label for="nome_lote">Nome do Lote:</label>
-                    <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" required>
-                    
-                    <label for="valor_ingresso">Valor do Ingresso:</label>
-                    <input type="number" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" required>
-                    <label for="quantidade_ingresso">Quantidade de Ingressos:</label>
-                    <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" required>
-                </div>
-            </div>
-            <button type="button" class="add-lot">Adicionar Lote</button>
-        `;
-                        ticketsContainer.appendChild(newTicket);
-                    });
-
-                    document.addEventListener('click', function (e) {
-                        if (e.target && e.target.classList.contains('add-lot')) {
-                            var ticketContainer = e.target.closest('.ticket');
-                            var lotsContainer = ticketContainer.querySelector('.lots-container');
-                            var lotCount = lotsContainer.querySelectorAll('.lot').length;
-
-                            // Get the ticket index
-                            var ticketIndex = Array.from(ticketContainer.parentNode.children).indexOf(ticketContainer);
-
-                            var newLot = document.createElement('div');
-                            newLot.classList.add('lot');
-                            newLot.innerHTML = `
-                <label for="nome_lote">Nome do Lote:</label>
-                <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][nome_lote]" required>
-               
-                
-                <label for="valor_ingresso">Valor do Ingresso:</label>
-                <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" required>
-                <label for="quantidade_ingresso">Quantidade de Ingressos:</label>
-                <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" required>
-            `;
-                            lotsContainer.appendChild(newLot);
-                        }
-                    });
-                </script>
-
-
-
                 <!-- End of Main Content -->
 
                 <!-- Footer -->

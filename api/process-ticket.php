@@ -43,7 +43,8 @@ try {
 
     // Confirmar a transação se tudo ocorrer bem
     $conn->commit();
-    echo "Ingressos e Lotes criados com sucesso!";
+    echo "<script>alert('Ingressos e Lotes criados com sucesso!'); 
+            window.location.href = 'view-event.php';</script>";
 } catch (Exception $e) {
     // Rollback se ocorrer algum erro
     $conn->rollback();

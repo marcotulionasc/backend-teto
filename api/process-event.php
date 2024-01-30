@@ -17,6 +17,7 @@ $local_number = $_POST['local_number'];
 $local_city = $_POST['local_city'];
 $local_uf = $_POST['local_uf'];
 $complement = $_POST['complement'];
+$category = $_POST['category'];
 
 
 $image = $_FILES['image_event']['tmp_name'];  // Certifique-se de que o nome do campo está correto
@@ -37,7 +38,8 @@ $sql = "INSERT INTO Events (tenant_id,
                             local_city, 
                             local_uf, 
                             complement,
-                            image_event) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            image_event,
+                            category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
 $stmt = $conn->prepare($sql);
 
@@ -46,7 +48,7 @@ if (!$stmt) {
 }
 
 // Bind parameters
-$stmt->bind_param("sssssssssssss", $tenant_id, $title, $description, $nome_local, $data_hour, $local_cep, $local_street, $local_neighborhood, $local_number, $local_city, $local_uf, $complement, $image_base64);
+$stmt->bind_param("ssssssssssssss", $tenant_id, $title, $description, $nome_local, $data_hour, $local_cep, $local_street, $local_neighborhood, $local_number, $local_city, $local_uf, $complement, $image_base64, $category);
 
 // Execute statement
 $result = $stmt->execute();

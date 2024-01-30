@@ -14,12 +14,37 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
         <?php echo $_SESSION['tenant_name']; ?>
     </title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+
+    <style>
+        label{
+          
+            border-radius: 10%;
+            background-color: #f8f9fc;
+        }
+
+        input{
+            margin-top: 10px;
+            border-radius: 6px;
+            background-color: #f8f9fc;
+            width: 300px; /* Altere o valor conforme necessário */
+        }
+
+        .custom-button{
+            margin-top: 10px;
+            border-radius: 6px;
+            background-color: #4e73df;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+
+
 </head>
 
 <body id="page-top">
@@ -46,8 +71,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
             <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Ferramentas</span>
                 </a>
@@ -71,8 +95,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Ações do sistema</span>
                 </a>
@@ -105,11 +128,9 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por"
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -123,18 +144,14 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Pesquisar por" aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por" aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -147,15 +164,13 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -198,15 +213,13 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
@@ -245,8 +258,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -263,16 +275,14 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     <?php echo $_SESSION['tenant_name']; ?>
                                 </span>
                                 <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
@@ -286,8 +296,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                     Log de atividades
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../index.html" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="../index.html" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
                                 </a>
@@ -300,42 +309,34 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-bottom: 20px">
                     <div class="row justify-content-center">
                         <div class="wrapper">
-                            <div class="form-inner" style="height: 1200px;">
+                            <div class="form-inner" style="height: auto;">
                                 <form id="create-form" action="process-ticket.php" method="POST">
-                                    <h4>Criar Ingressos e Lotes</h4>
+                                    <h4>Criar Ingressos</h4>
                                     <div id="tickets-container">
                                         <!-- Campos para criar ingressos -->
                                         <div class="ticket">
-                                            <label for="nome_ingresso">Nome do Ingresso:</label>
-                                            <input type="text" name="ingressos[0][nome_ingresso]" required>
-                                            <label for="start_date">Data de Início:</label>
-                                            <input type="datetime-local" name="ingressos[0][start_date]" required>
-                                            <label for="end_date">Data de Fim:</label>
-                                            <input type="datetime-local" name="ingressos[0][end_date]" required>
+                                           
+                                            <input type="text" name="ingressos[0][nome_ingresso]" placeholder="Nome ingresso" required>
+                                            <br>Data de Início <input type="datetime-local" name="ingressos[0][start_date]" placeholder="Data de início" required>
+                                            <br>Data de Fim <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de fim" required>
 
-                                            <!-- Campos para criar lotes -->
+                                            <h4 style="margin-top: 20px;">Criar Lotes do ingresso</h4>
                                             <div class="lots-container">
                                                 <div class="lot">
-                                                    <label for="nome_lote">Nome do Lote:</label>
-                                                    <input type="text" name="ingressos[0][lotes][0][nome_lote]"
-                                                        required>
-
-                                                    <label for="valor_ingresso">Valor do Ingresso:</label>
-                                                    <input type="number" name="ingressos[0][lotes][0][valor_ingresso]"
-                                                        required>
-                                                    <label for="quantidade_ingresso">Quantidade de Ingressos:</label>
-                                                    <input type="number"
-                                                        name="ingressos[0][lotes][0][quantidade_ingresso]" required>
+                                    
+                                                    <input type="text" name="ingressos[0][lotes][0][nome_lote]" placeholder="Nome lote" required>
+                                                    <input type="text" name="ingressos[0][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
+                                                    <input type="number" name="ingressos[0][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
                                                 </div>
                                             </div>
-                                            <button type="button" class="add-lot">Adicionar Lote</button>
+                                            <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
                                         </div>
                                     </div>
-                                    <button type="button" id="add-ticket">Adicionar Ingresso</button>
-                                    <button type="submit">Criar Ingressos e Lotes</button>
+                                    <button class="custom-button" type="button" id="add-ticket">Adicionar Ingresso</button>
+                                    <button  class="custom-button" type="submit">Criar Ingressos e Lotes</button>
                                 </form>
                             </div>
                         </div>
@@ -343,38 +344,32 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 </div>
 
                 <script>
-                    document.getElementById('add-ticket').addEventListener('click', function () {
+                    document.getElementById('add-ticket').addEventListener('click', function() {
                         var ticketsContainer = document.getElementById('tickets-container');
                         var ticketCount = ticketsContainer.querySelectorAll('.ticket').length;
 
                         var newTicket = document.createElement('div');
                         newTicket.classList.add('ticket');
                         newTicket.innerHTML = `
-            <label for="nome_ingresso">Nome do Ingresso:</label>
-            <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" required>
-           
-            <label for="start_date">Data de Início:</label>
-            <input type="datetime-local" name="ingressos[${ticketCount}][start_date]" required>
-            <label for="end_date">Data de Fim:</label>
-            <input type="datetime-local" name="ingressos[${ticketCount}][end_date]" required>
+        
+        <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" placeholder="Nome ingresso" required>
+        <br>Data de Início <input type="datetime-local" name="ingressos[${ticketCount}][start_date]" required>
+        <br>Data de Fim <input type="datetime-local" name="ingressos[${ticketCount}][end_date]" required>
 
-            <div class="lots-container">
-                <div class="lot">
-                    <label for="nome_lote">Nome do Lote:</label>
-                    <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" required>
-                    
-                    <label for="valor_ingresso">Valor do Ingresso:</label>
-                    <input type="number" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" required>
-                    <label for="quantidade_ingresso">Quantidade de Ingressos:</label>
-                    <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" required>
-                </div>
+        <div class="lots-container" style="margin-top: 10px;">
+            <div class="lot">
+                <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" placeholder="Nome lote" required>
+                <input type="text" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
+                <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
             </div>
-            <button type="button" class="add-lot">Adicionar Lote</button>
-        `;
+        </div>
+        <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
+        <button class="custom-button delete-ticket" type="button" class="delete-ticket">Excluir Ingresso</button>
+    `;
                         ticketsContainer.appendChild(newTicket);
                     });
 
-                    document.addEventListener('click', function (e) {
+                    document.addEventListener('click', function(e) {
                         if (e.target && e.target.classList.contains('add-lot')) {
                             var ticketContainer = e.target.closest('.ticket');
                             var lotsContainer = ticketContainer.querySelector('.lots-container');
@@ -386,16 +381,22 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                             var newLot = document.createElement('div');
                             newLot.classList.add('lot');
                             newLot.innerHTML = `
-                <label for="nome_lote">Nome do Lote:</label>
-                <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][nome_lote]" required>
-               
-                
-                <label for="valor_ingresso">Valor do Ingresso:</label>
-                <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" required>
-                <label for="quantidade_ingresso">Quantidade de Ingressos:</label>
-                <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" required>
-            `;
+            
+            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][nome_lote]" placeholder=" Nome do lote" required>
+           
+           
+            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" placeholder="Valor do ingresso" required>
+            
+            <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
+            <button class="custom-button delete-lot" type="button" class="delete-lot">Excluir Lote</button>
+        `;
                             lotsContainer.appendChild(newLot);
+                        } else if (e.target && e.target.classList.contains('delete-ticket')) {
+                            var ticketContainer = e.target.closest('.ticket');
+                            ticketContainer.remove();
+                        } else if (e.target && e.target.classList.contains('delete-lot')) {
+                            var lotContainer = e.target.closest('.lot');
+                            lotContainer.remove();
                         }
                     });
                 </script>

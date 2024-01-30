@@ -2,14 +2,23 @@
 session_start();
 require_once('conn.php');
 
-
-// Verifica se o usuário está autenticado
+// Caso não tenha login, redireciona para a página de login
 if (!isset($_SESSION['tenant_id'])) {
-    header('Location: ../index.html'); // Redireciona para a página de login se não estiver autenticado
+    header('Location: ../index.html');
     exit();
 }
 
 $tenant_id = $_SESSION['tenant_id'];
+
+$id = $_GET['id']; // Obter o ID do evento da URL
+
+// Consulta SQL para buscar os detalhes do evento
+$query = "SELECT * FROM events WHERE id_event = $id";
+$result = $conn->query($query);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,12 +30,44 @@ $tenant_id = $_SESSION['tenant_id'];
         <?php echo $_SESSION['tenant_name']; ?>
     </title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/card-event.css">
+    <link rel="stylesheet" href="../css/card-event-custom.css">
+
+    <style>
+        .event-details {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .event-details:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .event-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .event-title {
+            margin-top: 20px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .event-info {
+            margin-left: 20px;
+            font-size: 1em;
+            color: #555;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -53,8 +94,7 @@ $tenant_id = $_SESSION['tenant_id'];
             <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Ferramentas</span>
                 </a>
@@ -69,17 +109,15 @@ $tenant_id = $_SESSION['tenant_id'];
                 </div>
             </li>
 
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider"> <!-- Separar componentes -->
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Ações
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Ações do sistema</span>
                 </a>
@@ -112,11 +150,9 @@ $tenant_id = $_SESSION['tenant_id'];
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por"
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por" aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -130,18 +166,14 @@ $tenant_id = $_SESSION['tenant_id'];
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Pesquisar por" aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Pesquisar por" aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -154,15 +186,13 @@ $tenant_id = $_SESSION['tenant_id'];
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -205,15 +235,13 @@ $tenant_id = $_SESSION['tenant_id'];
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
@@ -252,8 +280,7 @@ $tenant_id = $_SESSION['tenant_id'];
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -270,16 +297,14 @@ $tenant_id = $_SESSION['tenant_id'];
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     <?php echo $_SESSION['tenant_name']; ?>
                                 </span>
                                 <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
@@ -305,114 +330,48 @@ $tenant_id = $_SESSION['tenant_id'];
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="wrapper" style="margin-bottom: 30px;">
-                                <div class="form-inner" style="height: auto;">
-                                    <form class="login" action="process-event.php" method="POST"
-                                        enctype="multipart/form-data" >
-                                        <input type="hidden" name="tenant_id"
-                                            value="<?php echo $_SESSION['tenant_id']; ?>">
+                <div class="event-details" style="margin-bottom: 20px">
+                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px;" />
+                    <h2 class="event-title"><?php echo $row['title']; ?></h2>
+                    <h3 class="event-info"> <?php echo $row['id_event']; ?></h3>
 
-                                        <div class="field">
-                                            <input type="text" name="title" placeholder="Qual o nome do evento?" required>
-                                        </div>
+                    <p class="event-info"><?php echo $row['date_hour']; ?></p>
+                    <p class="event-info"><?php echo $row['local_cep']; ?></p>
+                    <p class="event-info"><?php echo $row['local_city']; ?></p>
+                    <p class="event-info"><?php echo $row['local_uf']; ?></p>
+                    <p class="event-info"><?php echo $row['local_street']; ?></p>
+                    <p class="event-info"><?php echo $row['local_neighborhood']; ?></p>
+                    <p class="event-info"><?php echo $row['local_number']; ?></p>
+                    <p class="event-info"><?php echo $row['local_name']; ?></p>
+                    <p class="event-info"><?php echo $row['category']; ?></p>
+                    <p class="event-info"><?php echo $row['created_at']; ?></p>
+                    <p class="event-info"><?php echo $row['description']; ?></p>
+                    <p class="event-info"><?php echo $row['complement']; ?></p>
+                    <p class="event-info"><?php echo $row['events_active']; ?></p>
+                </div>
+            </div>  
+                <!-- End of Main Content -->
 
-                                        <div class="field">
-                                            <input type="text" name="description" placeholder="Descreva o evento" required>
-                                              
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="category" placeholder="Qual será a categoria do evento?"
-                                                required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="nome-local" placeholder="Qual o nome do local?" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="datetime-local" name="data_hour" placeholder="Qual o dia e a hora do evento?"
-                                                required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_cep" placeholder="CEP" pattern="[0-9]{8}" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_street" placeholder="Rua do evento" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_neighborhood" placeholder="Bairro do evento" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="number" name="local_number" placeholder="Número" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_city" placeholder="Cidade" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_uf" placeholder="UF" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="complement" placeholder="Complemento">
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="file" name="image_event" accept="image/*" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="submit" value="Criar evento">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Marco Nascimento</span>
                         </div>
                     </div>
+                </footer>
+                <!-- End of Footer -->
 
+            
+            <!-- End of Content Wrapper -->
 
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Marco Nascimento</span>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- End of Footer -->
-
-                </div>
-                <!-- End of Content Wrapper -->
-
-
-                <!-- Bootstrap core JavaScript-->
-                <script src="../vendor/jquery/jquery.min.js"></script>
-                <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-                <!-- Core plugin JavaScript-->
-                <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-                <!-- Custom scripts for all pages-->
-                <script src="../js/sb-admin-2.min.js"></script>
-
-                <!-- Page level plugins -->
-                <script src="../vendor/chart.js/Chart.min.js"></script>
-
-                <!-- Page level custom scripts -->
-                <script src="../js/demo/chart-area-demo.js"></script>
-                <script src="../js/demo/chart-pie-demo.js"></script>
+            <script src="../vendor/jquery/jquery.min.js"></script>
+            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="../js/sb-admin-2.min.js"></script>
+            <script src="../vendor/chart.js/Chart.min.js"></script>
+            <script src="../js/demo/chart-area-demo.js"></script>
+            <script src="../js/demo/chart-pie-demo.js"></script>
 
 
 </body>
