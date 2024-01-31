@@ -348,6 +348,9 @@ if ($result->num_rows > 0) {
                         var statusTransformado = (statusEvento === 1) ? 'ativo' : 'inativo';
                         document.write('<p class="event-info"><strong>Status do evento:</strong> ' + statusTransformado + '</p>');
                     </script>
+
+                    <a href="view-ingressos-lote?id=<?php echo $row['id_event']; ?>" class="btn btn-primary">Ver ingressos</a>
+
                 </div>
             </div>  
                 <!-- End of Main Content -->
