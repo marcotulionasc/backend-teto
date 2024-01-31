@@ -25,7 +25,7 @@ $result = $stmt->get_result();
 
 $rows = array();
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         $rows[] = $row; // Adicione cada linha ao array $rows
     }
 } else {
@@ -139,9 +139,7 @@ if ($result->num_rows > 0) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="create-event.php">Eventos ativos</a>
-                        <a class="collapse-item" href="#">Excluir evento</a>
-                        <a class="collapse-item" href="#">Ingressos e lotes ativos</a>
+                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>
@@ -345,9 +343,9 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <h2 class="event-title">Detalhes dos ingressos e lotes</h2>                  
+                    <h2 class="event-title">Detalhes dos ingressos e lotes</h2>
                     <?php
-                    foreach($rows as $row) {
+                    foreach ($rows as $row) {
                         echo '<hr class="sidebar-divider">';
                         echo '<p class="event-info"><strong>Nome ingresso: </strong>' . $row['nome_ingresso'] . '</p>';
                         echo '<p class="event-info"><strong>Código ingresso: </strong>' . $row['id_ingresso'] . '</p>';
@@ -357,26 +355,25 @@ if ($result->num_rows > 0) {
                         echo '<p class="event-info"><strong>Código lote: </strong>' . $row['id_lote'] . '</p>';
                         echo '<p class="event-info"><strong>Valor: </strong>' . $row['valor_ingresso'] . '</p>';
                         echo '<p class="event-info"><strong>Quantidade </strong>' . $row['quantidade_ingresso'] . '</p>';
-                        
-                     }?>
-                    
-                    
+                    } ?>
+
+
 
                 </div>
-            </div>  
-                <!-- End of Main Content -->
+            </div>
+            <!-- End of Main Content -->
 
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Marco Nascimento</span>
-                        </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Marco Nascimento</span>
                     </div>
-                </footer>
-                <!-- End of Footer -->
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
-            
+
             <!-- End of Content Wrapper -->
 
             <script src="../vendor/jquery/jquery.min.js"></script>
