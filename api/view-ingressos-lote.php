@@ -13,12 +13,26 @@ $tenant_id = $_SESSION['tenant_id'];
 $id = $_GET['id']; // Obter o ID do evento da URL
 
 // Consulta SQL para buscar os detalhes do evento
-$query = "SELECT * FROM events WHERE id_event = $id";
-$result = $conn->query($query);
+$query = "SELECT events.*, ingressos.*, lotes.* 
+          FROM events 
+          LEFT JOIN ingressos ON events.id_event = ingressos.id_evento 
+          LEFT JOIN lotes ON ingressos.id_ingresso = lotes.id_ingresso 
+          WHERE events.id_event = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 
+$rows = array();
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+    while($row = $result->fetch_assoc()) {
+        $rows[] = $row; // Adicione cada linha ao array $rows
+    }
+} else {
+    echo "0 results";
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -331,25 +345,22 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
-                    <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
-                    <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>
-
-                    <p class="event-info"><strong>Data e hora: </strong><?php echo $row['date_hour']; ?></p>
-                    <p class="event-info"><strong>CEP: </strong><?php echo $row['local_cep']; ?></p>
-                    <p class="event-info"><strong>Cidade: </strong><?php echo $row['local_city']; ?>, <?php echo $row['local_uf']; ?></p>
-                    <p class="event-info"><strong>Endereço: </strong><?php echo $row['local_street']; ?>, <?php echo $row['local_neighborhood']; ?>, <?php echo $row['local_number']; ?>, <?php echo $row['complement']; ?> </p>
-                    <p class="event-info"><strong>Nome do local do evento: </strong><?php echo $row['local_name']; ?></p>
-                    <p class="event-info"><strong>Maior de <?php echo $row['category']; ?> anos</strong></p>
-                    <p class="event-info"><strong>Data criação do evento: </strong><?php echo $row['created_at']; ?></p>
-                    <p class="event-info"><strong>Descrição: </strong><?php echo $row['description']; ?></p>
-                    <script>
-                        var statusEvento = <?php echo $row['events_active']; ?>;
-                        var statusTransformado = (statusEvento === 1) ? 'ativo' : 'inativo';
-                        document.write('<p class="event-info"><strong>Status do evento:</strong> ' + statusTransformado + '</p>');
-                    </script>
-
-                    <a href="view-ingressos-lote.php?id=<?php echo $row['id_event']; ?>" class="btn btn-primary">Ver ingressos</a>
+                    <h2 class="event-title">Detalhes dos ingressos e lotes</h2>                  
+                    <?php
+                    foreach($rows as $row) {
+                        echo '<hr class="sidebar-divider">';
+                        echo '<p class="event-info"><strong>Nome ingresso: </strong>' . $row['nome_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Código ingresso: </strong>' . $row['id_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Data início: </strong>' . $row['start_date'] . '</p>';
+                        echo '<p class="event-info"><strong>Data fim: </strong>' . $row['end_date'] . '</p>';
+                        echo '<p class="event-info"><strong>Nome lote: </strong>' . $row['nome_lote'] . '</p>';
+                        echo '<p class="event-info"><strong>Código lote: </strong>' . $row['id_lote'] . '</p>';
+                        echo '<p class="event-info"><strong>Valor: </strong>' . $row['valor_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Quantidade </strong>' . $row['quantidade_ingresso'] . '</p>';
+                        
+                     }?>
+                    
+                    
 
                 </div>
             </div>  
