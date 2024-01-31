@@ -20,20 +20,21 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
     <link rel="stylesheet" href="../css/login.css">
 
     <style>
-        label{
-          
+        label {
+
             border-radius: 10%;
             background-color: #f8f9fc;
         }
 
-        input{
+        input {
             margin-top: 10px;
             border-radius: 6px;
             background-color: #f8f9fc;
-            width: 300px; /* Altere o valor conforme necessário */
+            width: 300px;
+            /* Altere o valor conforme necessário */
         }
 
-        .custom-button{
+        .custom-button {
             margin-top: 10px;
             border-radius: 6px;
             background-color: #4e73df;
@@ -103,9 +104,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="create-event.php">Eventos ativos</a>
-                        <a class="collapse-item" href="#">Excluir evento</a>
-                        <a class="collapse-item" href="#">Ingressos e lotes ativos</a>
+                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>
@@ -318,7 +317,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                     <div id="tickets-container">
                                         <!-- Campos para criar ingressos -->
                                         <div class="ticket">
-                                           
+
                                             <input type="text" name="ingressos[0][nome_ingresso]" placeholder="Nome ingresso" required>
                                             <br>Data de Início <input type="datetime-local" name="ingressos[0][start_date]" placeholder="Data de início" required>
                                             <br>Data de Fim <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de fim" required>
@@ -326,7 +325,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                             <h4 style="margin-top: 20px;">Criar Lotes do ingresso</h4>
                                             <div class="lots-container">
                                                 <div class="lot">
-                                    
+
                                                     <input type="text" name="ingressos[0][lotes][0][nome_lote]" placeholder="Nome lote" required>
                                                     <input type="text" name="ingressos[0][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
                                                     <input type="number" name="ingressos[0][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
@@ -336,7 +335,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                         </div>
                                     </div>
                                     <button class="custom-button" type="button" id="add-ticket">Adicionar Ingresso</button>
-                                    <button  class="custom-button" type="submit">Criar Ingressos e Lotes</button>
+                                    <button class="custom-button" type="submit">Criar Ingressos e Lotes</button>
                                 </form>
                             </div>
                         </div>
