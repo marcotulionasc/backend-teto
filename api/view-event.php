@@ -93,8 +93,9 @@ $result = $stmt->get_result();
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
-                        <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
+                        <a class="collapse-item" href="create-event.php">Criar Evento</a>
+                        <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
+                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>
@@ -323,7 +324,12 @@ $result = $stmt->get_result();
                                             </label>
                                         </div>
                                     </div>
-                                    <!-- Botão Compra-->
+                                    
+                                    <div class="card-footer p-1 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center text-black"><a class="btn btn-outline-danger btn-sm mt-auto text-black" href="process-inactive.php?id=<?php echo $row['id_event']; ?>">Desativar evento</a>
+                                        </div>
+                                    </div>
+
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="event-details.php?id=<?php echo $row['id_event']; ?>">Ver mais</a>
                                         </div>

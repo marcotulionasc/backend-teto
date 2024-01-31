@@ -124,8 +124,9 @@ if ($result->num_rows > 0) {
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
-                        <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
+                        <a class="collapse-item" href="create-event.php">Criar Evento</a>
+                        <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
+                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>
@@ -331,6 +332,7 @@ if ($result->num_rows > 0) {
                 <div class="event-details" style="margin-bottom: 20px">
                     <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
                     <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
+                    <hr class="sidebar-divider">
                     <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>
 
                     <p class="event-info"><strong>Data e hora: </strong><?php echo $row['date_hour']; ?></p>
