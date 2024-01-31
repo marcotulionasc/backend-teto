@@ -331,23 +331,23 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px;" />
-                    <h2 class="event-title"><?php echo $row['title']; ?></h2>
-                    <h3 class="event-info"> <?php echo $row['id_event']; ?></h3>
+                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
+                    <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
+                    <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>
 
-                    <p class="event-info"><?php echo $row['date_hour']; ?></p>
-                    <p class="event-info"><?php echo $row['local_cep']; ?></p>
-                    <p class="event-info"><?php echo $row['local_city']; ?></p>
-                    <p class="event-info"><?php echo $row['local_uf']; ?></p>
-                    <p class="event-info"><?php echo $row['local_street']; ?></p>
-                    <p class="event-info"><?php echo $row['local_neighborhood']; ?></p>
-                    <p class="event-info"><?php echo $row['local_number']; ?></p>
-                    <p class="event-info"><?php echo $row['local_name']; ?></p>
-                    <p class="event-info"><?php echo $row['category']; ?></p>
-                    <p class="event-info"><?php echo $row['created_at']; ?></p>
-                    <p class="event-info"><?php echo $row['description']; ?></p>
-                    <p class="event-info"><?php echo $row['complement']; ?></p>
-                    <p class="event-info"><?php echo $row['events_active']; ?></p>
+                    <p class="event-info"><strong>Data e hora: </strong><?php echo $row['date_hour']; ?></p>
+                    <p class="event-info"><strong>CEP: </strong><?php echo $row['local_cep']; ?></p>
+                    <p class="event-info"><strong>Cidade: </strong><?php echo $row['local_city']; ?>, <?php echo $row['local_uf']; ?></p>
+                    <p class="event-info"><strong>Endereço: </strong><?php echo $row['local_street']; ?>, <?php echo $row['local_neighborhood']; ?>, <?php echo $row['local_number']; ?>, <?php echo $row['complement']; ?> </p>
+                    <p class="event-info"><strong>Nome do local do evento: </strong><?php echo $row['local_name']; ?></p>
+                    <p class="event-info"><strong>Maior de <?php echo $row['category']; ?> anos</strong></p>
+                    <p class="event-info"><strong>Data criação do evento: </strong><?php echo $row['created_at']; ?></p>
+                    <p class="event-info"><strong>Descrição: </strong><?php echo $row['description']; ?></p>
+                    <script>
+                        var statusEvento = <?php echo $row['events_active']; ?>;
+                        var statusTransformado = (statusEvento === 1) ? 'ativo' : 'inativo';
+                        document.write('<p class="event-info"><strong>Status do evento:</strong> ' + statusTransformado + '</p>');
+                    </script>
                 </div>
             </div>  
                 <!-- End of Main Content -->
