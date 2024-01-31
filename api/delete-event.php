@@ -1,8 +1,25 @@
 <?php
+session_start();
+require_once('conn.php');
 
-if (session_id() == '' || !isset($_SESSION['id_event'])) {
-    session_start();
+// Caso não tenha login, redireciona para a página de login
+if (!isset($_SESSION['tenant_id'])) {
+    header('Location: ../index.html');
+    exit();
 }
+
+$tenant_id = $_SESSION['tenant_id'];
+
+$sql = "SELECT * FROM Events WHERE tenant_id = ? AND events_active = 0";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Erro na preparação da consulta: " . $conn->error);
+}
+
+$stmt->bind_param("i", $tenant_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -18,34 +35,8 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
-
-    <style>
-        label {
-
-            border-radius: 10%;
-            background-color: #f8f9fc;
-        }
-
-        input {
-            margin-top: 10px;
-            border-radius: 6px;
-            background-color: #f8f9fc;
-            width: 300px;
-            /* Altere o valor conforme necessário */
-        }
-
-        .custom-button {
-            margin-top: 10px;
-            border-radius: 6px;
-            background-color: #4e73df;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-
-
+    <link rel="stylesheet" href="../css/card-event.css">
+    <link rel="stylesheet" href="../css/card-event-custom.css">
 </head>
 
 <body id="page-top">
@@ -87,9 +78,8 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 </div>
             </li>
 
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider"> <!-- Separar componentes -->
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Ações
             </div>
@@ -309,100 +299,46 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="margin-bottom: 20px">
-                    <div class="row justify-content-center">
-                        <div class="wrapper">
-                            <div class="form-inner" style="height: auto;">
-                                <form id="create-form" action="process-ticket.php" method="POST">
-                                    <h4>Criar Ingressos</h4>
-                                    <div id="tickets-container">
-                                        <!-- Campos para criar ingressos -->
-                                        <div class="ticket">
-
-                                            <input type="text" name="ingressos[0][nome_ingresso]" placeholder="Nome ingresso" required>
-                                            <br>Data de Início <input type="datetime-local" name="ingressos[0][start_date]" placeholder="Data de início" required>
-                                            <br>Data de Fim <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de fim" required>
-
-                                            <h4 style="margin-top: 20px;">Criar Lotes do ingresso</h4>
-                                            <div class="lots-container">
-                                                <div class="lot">
-
-                                                    <input type="text" name="ingressos[0][lotes][0][nome_lote]" placeholder="Nome lote" required>
-                                                    <input type="text" name="ingressos[0][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
-                                                    <input type="number" name="ingressos[0][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-                                                </div>
-                                            </div>
-                                            <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
+                <h2 style="margin-left: 20px">Meus eventos</h2>
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center">
+                        <?php while ($row = $result->fetch_assoc()) : ?>
+                            <div class="col mb-5">
+                                <div class="card h-100 shadow-lg shadow-lg">
+                                    <!-- Imagem evento
+                                    <input type="hidden" name="image_event" value="<?php echo $row['id_event']; ?>">-->
+                                    <img class="card-img-top" src="data:image/webp;base64,<?php echo $row['image_event']; ?>" alt="..." style="max-width: 450px; max-height: 300px;" />
+                                    <!-- Detalhe do evento-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <h5 class="fw-bolder">
+                                                <?php echo $row['title']; ?>
+                                            </h5>
+                                            <i class="fas fa-calendar" style="font-size: smaller;"></i>
+                                            <label style="font-size: smaller;">
+                                                <?php echo $row['date_hour']; ?>
+                                            </label> <br>
+                                            <i class="fas fa-map-marker-alt" style="font-size: smaller;"></i>
+                                            <label style="font-size: smaller;">
+                                                <?php echo $row['local_name']; ?>
+                                            </label>
                                         </div>
                                     </div>
-                                    <button class="custom-button" type="button" id="add-ticket">Adicionar Ingresso</button>
-                                    <button class="custom-button" type="submit">Criar Ingressos e Lotes</button>
-                                </form>
+                                    
+                                    <div class="card-footer p-1 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center text-black"><a class="btn btn-outline-danger btn-sm mt-auto text-black" href="process-delete.php?id=<?php echo $row['id_event']; ?>">Excluir Evento</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="event-details.php?id=<?php echo $row['id_event']; ?>">Ver mais</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
-
-                <script>
-                    document.getElementById('add-ticket').addEventListener('click', function() {
-                        var ticketsContainer = document.getElementById('tickets-container');
-                        var ticketCount = ticketsContainer.querySelectorAll('.ticket').length;
-
-                        var newTicket = document.createElement('div');
-                        newTicket.classList.add('ticket');
-                        newTicket.innerHTML = `
-        
-        <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" placeholder="Nome ingresso" required>
-        <br>Data de Início <input type="datetime-local" name="ingressos[${ticketCount}][start_date]" required>
-        <br>Data de Fim <input type="datetime-local" name="ingressos[${ticketCount}][end_date]" required>
-
-        <div class="lots-container" style="margin-top: 10px;">
-            <div class="lot">
-                <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" placeholder="Nome lote" required>
-                <input type="text" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
-                <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-            </div>
-        </div>
-        <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
-        <button class="custom-button delete-ticket" type="button" class="delete-ticket">Excluir Ingresso</button>
-    `;
-                        ticketsContainer.appendChild(newTicket);
-                    });
-
-                    document.addEventListener('click', function(e) {
-                        if (e.target && e.target.classList.contains('add-lot')) {
-                            var ticketContainer = e.target.closest('.ticket');
-                            var lotsContainer = ticketContainer.querySelector('.lots-container');
-                            var lotCount = lotsContainer.querySelectorAll('.lot').length;
-
-                            // Get the ticket index
-                            var ticketIndex = Array.from(ticketContainer.parentNode.children).indexOf(ticketContainer);
-
-                            var newLot = document.createElement('div');
-                            newLot.classList.add('lot');
-                            newLot.innerHTML = `
-            
-            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][nome_lote]" placeholder=" Nome do lote" required>
-           
-           
-            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" placeholder="Valor do ingresso" required>
-            
-            <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-            <button class="custom-button delete-lot" type="button" class="delete-lot">Excluir Lote</button>
-        `;
-                            lotsContainer.appendChild(newLot);
-                        } else if (e.target && e.target.classList.contains('delete-ticket')) {
-                            var ticketContainer = e.target.closest('.ticket');
-                            ticketContainer.remove();
-                        } else if (e.target && e.target.classList.contains('delete-lot')) {
-                            var lotContainer = e.target.closest('.lot');
-                            lotContainer.remove();
-                        }
-                    });
-                </script>
-
-
-
                 <!-- End of Main Content -->
 
                 <!-- Footer -->

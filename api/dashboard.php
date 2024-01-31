@@ -94,8 +94,9 @@ $result = $stmt->get_result();
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
-                        <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
+                        <a class="collapse-item" href="create-event.php">Criar Evento</a>
+                        <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
+                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>

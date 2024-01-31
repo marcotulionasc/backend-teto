@@ -138,8 +138,9 @@ if ($result->num_rows > 0) {
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Telas</h6>
-                        <a class="collapse-item" href="create-event.php">Criar evento</a>
-                        <a class="collapse-item" href="view-event.php">Gerenciamento de eventos</a>
+                        <a class="collapse-item" href="create-event.php">Criar Evento</a>
+                        <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
+                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="#">QR Code ingressos</a>
@@ -349,13 +350,20 @@ if ($result->num_rows > 0) {
                         echo '<hr class="sidebar-divider">';
                         echo '<p class="event-info"><strong>Nome ingresso: </strong>' . $row['nome_ingresso'] . '</p>';
                         echo '<p class="event-info"><strong>Código ingresso: </strong>' . $row['id_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Status ingresso: </strong>';
+                        echo $row['ingresso_ativo'] == 1 ? 'Ativo' : 'Inativo';
+                        echo '</p>';
                         echo '<p class="event-info"><strong>Data início: </strong>' . $row['start_date'] . '</p>';
                         echo '<p class="event-info"><strong>Data fim: </strong>' . $row['end_date'] . '</p>';
                         echo '<p class="event-info"><strong>Nome lote: </strong>' . $row['nome_lote'] . '</p>';
                         echo '<p class="event-info"><strong>Código lote: </strong>' . $row['id_lote'] . '</p>';
+                        echo '<p class="event-info"><strong>Status lote: </strong>';
+                        echo $row['lote_ativo'] == 1 ? 'Ativo' : 'Inativo';
+                        echo '</p>';
                         echo '<p class="event-info"><strong>Valor: </strong>' . $row['valor_ingresso'] . '</p>';
                         echo '<p class="event-info"><strong>Quantidade </strong>' . $row['quantidade_ingresso'] . '</p>';
-                    } ?>
+                    }
+                    ?>
 
 
 
