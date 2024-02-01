@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -5,8 +6,6 @@
 * CONFIDENTIAL, UNPUBLISHED PROPERTY OF MARCO NASCIMENTO
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
-
-<?php
 
 if (session_id() == '' || !isset($_SESSION['id_event'])) {
     session_start();
