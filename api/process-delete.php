@@ -6,6 +6,7 @@
 * CONFIDENTIAL, UNPUBLISHED PROPERTY OF MARCO NASCIMENTO
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
+
 require_once('conn.php');
 
 $id = $_GET['id']; // Obter o ID do evento da URL
