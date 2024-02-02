@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -6,7 +7,6 @@
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
 
-<?php
 session_start();
 require_once('conn.php');
 
@@ -137,7 +137,8 @@ if ($result->num_rows > 0) {
                         <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="#">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+
                     </div>
                 </div>
             </li>
@@ -324,11 +325,11 @@ if ($result->num_rows > 0) {
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Log de atividades
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../index.html" data-toggle="modal" data-target="#logoutModal">
+                                <button type="submit" class="dropdown-item" form="logout-form">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
-                                </a>
+                                </button>
+                                <form id="logout-form" action="logout.php" method="POST"></form>
                             </div>
                         </li>
 
@@ -338,7 +339,7 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
+                    <img class="event-image" src=data:*/*;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
                     <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
                     <hr class="sidebar-divider">
                     <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>

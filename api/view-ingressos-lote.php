@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -5,8 +6,6 @@
 * CONFIDENTIAL, UNPUBLISHED PROPERTY OF MARCO NASCIMENTO
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
-
-<?php
 session_start();
 require_once('conn.php');
 
@@ -151,7 +150,8 @@ if ($result->num_rows > 0) {
                         <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="#">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+
                     </div>
                 </div>
             </li>
@@ -338,11 +338,11 @@ if ($result->num_rows > 0) {
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Log de atividades
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../index.html" data-toggle="modal" data-target="#logoutModal">
+                                <button type="submit" class="dropdown-item" form="logout-form">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
-                                </a>
+                                </button>
+                                <form id="logout-form" action="logout.php" method="POST"></form>
                             </div>
                         </li>
 
@@ -368,8 +368,17 @@ if ($result->num_rows > 0) {
                         echo '<p class="event-info"><strong>Status lote: </strong>';
                         echo $row['lote_ativo'] == 1 ? 'Ativo' : 'Inativo';
                         echo '</p>';
-                        echo '<p class="event-info"><strong>Valor: </strong>' . $row['valor_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Valor: </strong>R$ ' . $row['valor_ingresso'] . '</p>';
                         echo '<p class="event-info"><strong>Quantidade </strong>' . $row['quantidade_ingresso'] . '</p>';
+                        echo '<p class="event-info"><strong>Taxa valor do ingresso: </strong>' . $row['taxa_valor_ingresso'] . '%</p>';
+
+                        $valor_ingresso = $row['valor_ingresso'];
+                        $taxa_valor_ingresso = $row['taxa_valor_ingresso'];
+
+                        // Calcular o valor total
+                        $valor_total = $valor_ingresso + ($valor_ingresso * $taxa_valor_ingresso / 100);
+
+                        echo '<p class="event-info"><strong>Valor total (ingresso + taxa): </strong>R$ ' . $valor_total . '</p>';
                     }
                     ?>
 

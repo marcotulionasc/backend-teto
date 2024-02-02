@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -5,8 +6,6 @@
 * CONFIDENTIAL, UNPUBLISHED PROPERTY OF MARCO NASCIMENTO
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
-
-<?php
 
 if (session_id() == '' || !isset($_SESSION['id_event'])) {
     session_start();
@@ -116,7 +115,8 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                         <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="#">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+
                     </div>
                 </div>
             </li>
@@ -303,11 +303,11 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Log de atividades
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../index.html" data-toggle="modal" data-target="#logoutModal">
+                                <button type="submit" class="dropdown-item" form="logout-form">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
-                                </a>
+                                </button>
+                                <form id="logout-form" action="logout.php" method="POST"></form>
                             </div>
                         </li>
 
@@ -338,6 +338,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                                                     <input type="text" name="ingressos[0][lotes][0][nome_lote]" placeholder="Nome lote" required>
                                                     <input type="text" name="ingressos[0][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
                                                     <input type="number" name="ingressos[0][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
+                                                    <input type="text" name="ingressos[0][lotes][0][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
                                                 </div>
                                             </div>
                                             <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
@@ -369,6 +370,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" placeholder="Nome lote" required>
                 <input type="text" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
                 <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
+                <input type="text" name="ingressos[${ticketCount}][lotes][0][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
             </div>
         </div>
         <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
@@ -396,6 +398,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
             <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" placeholder="Valor do ingresso" required>
             
             <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
+            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
             <button class="custom-button delete-lot" type="button" class="delete-lot">Excluir Lote</button>
         `;
                             lotsContainer.appendChild(newLot);

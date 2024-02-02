@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -6,7 +7,6 @@
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
 
-<?php
 require_once('conn.php');
 
 $id = $_GET['id']; // Obter o ID do evento da URL
@@ -49,4 +49,3 @@ if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         }
     </script>';
 }
-?>

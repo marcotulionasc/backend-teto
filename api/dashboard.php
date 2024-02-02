@@ -1,3 +1,4 @@
+<?php
 /*
 * (c) COPYRIGHT 2024, MARCO NASCIMENTO
 * CAMPINAS-SP, BRASIL
@@ -6,7 +7,6 @@
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
 
-<?php
 session_start();
 require_once('conn.php');
 
@@ -31,6 +31,7 @@ if (!$stmt) {
 $stmt->bind_param("i", $tenant_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -60,7 +61,7 @@ $result = $stmt->get_result();
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="dashboard.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Painel</span>
                 </a>
@@ -107,7 +108,8 @@ $result = $stmt->get_result();
                         <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="#">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+
                     </div>
                 </div>
             </li>
@@ -289,10 +291,12 @@ $result = $stmt->get_result();
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <button type="submit" class="dropdown-item" form="logout-form">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                    Sair
+                                </button>
+                                <form id="logout-form" action="logout.php" method="POST"></form>
+                                </form>
                             </div>
                         </li>
 
