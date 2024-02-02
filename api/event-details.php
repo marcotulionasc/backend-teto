@@ -338,7 +338,7 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <img class="event-image" src=data:image/webp;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
+                    <img class="event-image" src=data:*/*;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
                     <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
                     <hr class="sidebar-divider">
                     <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>

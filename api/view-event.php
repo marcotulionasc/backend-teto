@@ -315,7 +315,7 @@ $result = $stmt->get_result();
                                 <div class="card h-100 shadow-lg shadow-lg">
                                     <!-- Imagem evento
                                     <input type="hidden" name="image_event" value="<?php echo $row['id_event']; ?>">-->
-                                    <img class="card-img-top" src="data:image/webp;base64,<?php echo $row['image_event']; ?>" alt="..." style="max-width: 450px; max-height: 300px;" />
+                                    <img class="card-img-top" src="data:*/*;base64,<?php echo $row['image_event']; ?>" alt="..." style="max-width: 450px; max-height: 300px;" />
                                     <!-- Detalhe do evento-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -326,9 +326,9 @@ $result = $stmt->get_result();
                                             <label style="font-size: smaller;">
                                                 <?php echo $row['date_hour']; ?>
                                             </label> <br>
-                                            <i class="fas fa-map-marker-alt" style="font-size: smaller;"></i>
+                                            
                                             <label style="font-size: smaller;">
-                                                <?php echo $row['local_name']; ?>
+                                            <i class="fas fa-map-marker-alt" style="font-size: smaller;"></i> <?php echo $row['local_name']; ?>
                                             </label>
                                         </div>
                                     </div>
