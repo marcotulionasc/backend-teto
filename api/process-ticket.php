@@ -37,11 +37,12 @@ try {
             $nome_lote = $lote['nome_lote'];
             $valor_ingresso = $lote['valor_ingresso'];
             $quantidade_ingresso = $lote['quantidade_ingresso'];
+            $taxa_valor_ingresso = $lote['taxa_valor_ingresso'];
 
             // Inserir o lote associado ao ingresso
-            $sqlLote = "INSERT INTO Lotes (id_ingresso, nome_lote, lote_ativo, valor_ingresso, quantidade_ingresso) VALUES (?, ?, 1, ?, ?)";
+            $sqlLote = "INSERT INTO Lotes (id_ingresso, nome_lote, lote_ativo, valor_ingresso, quantidade_ingresso, taxa_valor_ingresso) VALUES (?, ?, 1, ?, ?, ?)";
             $stmtLote = $conn->prepare($sqlLote);
-            $stmtLote->bind_param("isdd", $id_ingresso, $nome_lote, $valor_ingresso, $quantidade_ingresso);
+            $stmtLote->bind_param("isdds", $id_ingresso, $nome_lote, $valor_ingresso, $quantidade_ingresso, $taxa_valor_ingresso);
 
             if (!$stmtLote->execute()) {
                 throw new Exception("Erro ao criar Lote associado ao Ingresso.");
@@ -61,4 +62,3 @@ try {
 
 // Fechar a conexão
 $conn->close();
-?>

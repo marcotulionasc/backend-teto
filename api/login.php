@@ -26,16 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['tenant_name'] = $tenant['name'];
         $_SESSION['tenant_email'] = $tenant['email'];
 
-        $tenantId= $tenant['id'];
+        $tenantId = $tenant['id'];
 
         // Redirecionar para a página do tenant (ou para onde for necessário)
         header("Location: dashboard.php?name={$tenant['name']}");
         exit();
     } else {
         // Falha na autenticação
-        echo "Credenciais inválidas. Tente novamente.";
+        echo "<script>alert('Credenciais inválidas, tente novamente!'); 
+        window.location.href = '../index.html';</script>";
     }
 
     $conn->close();
 }
-?>

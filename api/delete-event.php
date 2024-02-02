@@ -105,7 +105,8 @@ $result = $stmt->get_result();
                         <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="#">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+
                     </div>
                 </div>
             </li>
@@ -292,11 +293,11 @@ $result = $stmt->get_result();
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Log de atividades
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="../index.html" data-toggle="modal" data-target="#logoutModal">
+                                <button type="submit" class="dropdown-item" form="logout-form">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
-                                </a>
+                                </button>
+                                <form id="logout-form" action="logout.php" method="POST"></form>
                             </div>
                         </li>
 
@@ -331,7 +332,7 @@ $result = $stmt->get_result();
                                             </label>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="card-footer p-1 pt-0 border-top-0 bg-transparent">
                                         <div class="text-center text-black"><a class="btn btn-outline-danger btn-sm mt-auto text-black" href="process-delete.php?id=<?php echo $row['id_event']; ?>">Excluir Evento</a>
                                         </div>

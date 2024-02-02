@@ -37,4 +37,3 @@ if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         }
     </script>';
 }
-?>

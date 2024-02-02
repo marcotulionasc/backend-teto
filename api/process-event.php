@@ -71,4 +71,3 @@ if (session_status() == PHP_SESSION_ACTIVE) {
 }
 
 header('Location: create-ticket.php');
-?>
