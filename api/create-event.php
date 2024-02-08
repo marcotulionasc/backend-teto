@@ -328,7 +328,7 @@ $tenant_id = $_SESSION['tenant_id'];
 
                                         <div class="field" style="display: flex; justify-content: space-between; align-items: center;">
                                             <input type="text" name="local_cep" id="local_cep" placeholder="CEP" pattern="[0-9]{8}" required style="flex: 1; margin-right: 10px;">
-                                            <button type="button" onclick="consultarCEP()" class="btn-primary" style="border-radius: 5px;">Pesquisar</button>
+                                            <button type="button" onclick="consultarCEP()" class="btn-primary" style="border-radius: 5px; width: 40px; height: 40px;"><i class="fas fa-search"></i></button>
                                         </div>
 
                                         <div class="field">
