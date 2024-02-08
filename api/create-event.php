@@ -326,28 +326,29 @@ $tenant_id = $_SESSION['tenant_id'];
                                             <input type="datetime-local" name="data_hour" placeholder="Qual o dia e a hora do evento?" required>
                                         </div>
 
-                                        <div class="field">
-                                            <input type="text" name="local_cep" placeholder="CEP" pattern="[0-9]{8}" required>
+                                        <div class="field" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <input type="text" name="local_cep" id="local_cep" placeholder="CEP" pattern="[0-9]{8}" required style="flex: 1; margin-right: 10px;">
+                                            <button type="button" onclick="consultarCEP()" class="btn-primary" style="border-radius: 5px;">Pesquisar</button>
                                         </div>
 
                                         <div class="field">
-                                            <input type="text" name="local_street" placeholder="Rua do evento" required>
+                                            <input type="text" name="local_street" id="local_street" placeholder="Rua do evento" required>
                                         </div>
 
                                         <div class="field">
-                                            <input type="text" name="local_neighborhood" placeholder="Bairro do evento" required>
+                                            <input type="text" name="local_neighborhood" id="local_neighborhood" placeholder="Bairro do evento" required>
                                         </div>
 
                                         <div class="field">
-                                            <input type="number" name="local_number" placeholder="Número" required>
+                                            <input type="text" name="local_city" id="local_city" placeholder="Cidade" required>
                                         </div>
 
                                         <div class="field">
-                                            <input type="text" name="local_city" placeholder="Cidade" required>
+                                            <input type="text" name="local_uf" id="local_uf" placeholder="UF" required>
                                         </div>
 
                                         <div class="field">
-                                            <input type="text" name="local_uf" placeholder="UF" required>
+                                            <input type="text" name="local_number" placeholder="Número" required>
                                         </div>
 
                                         <div class="field">
@@ -382,6 +383,30 @@ $tenant_id = $_SESSION['tenant_id'];
 
                 </div>
                 <!-- End of Content Wrapper -->
+
+
+                <script>
+                    function consultarCEP() {
+                        var cep = document.getElementById('local_cep').value;
+                        cep = cep.replace(/\D/g, '');
+
+                        var url = `https://viacep.com.br/ws/${cep}/json/`;
+
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.erro) {
+                                    alert('CEP não encontrado');
+                                } else {
+                                    document.getElementById('local_street').value = data.logradouro;
+                                    document.getElementById('local_neighborhood').value = data.bairro;
+                                    document.getElementById('local_city').value = data.localidade;
+                                    document.getElementById('local_uf').value = data.uf;
+                                }
+                            })
+                            .catch(error => console.error('Erro ao consultar o CEP:', error));
+                    }
+                </script>
 
 
                 <!-- Bootstrap core JavaScript-->
