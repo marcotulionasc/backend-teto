@@ -7,9 +7,22 @@
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
 
+session_start();
+require_once('conn.php');
+
+
+// Verifica se o usuário está autenticado
+if (!isset($_SESSION['tenant_id'])) {
+    header('Location: ../index.html'); // Redireciona para a página de login se não estiver autenticado
+    exit();
+}
+$tenant_id = $_SESSION['tenant_id'];
+
 if (session_id() == '' || !isset($_SESSION['id_event'])) {
     session_start();
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,34 +38,6 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
-
-    <style>
-        label {
-
-            border-radius: 10%;
-            background-color: #f8f9fc;
-        }
-
-        input {
-            margin-top: 10px;
-            border-radius: 6px;
-            background-color: #f8f9fc;
-            width: 300px;
-            /* Altere o valor conforme necessário */
-        }
-
-        .custom-button {
-            margin-top: 10px;
-            border-radius: 6px;
-            background-color: #4e73df;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-
-
 </head>
 
 <body id="page-top">
@@ -68,7 +53,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="../index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Painel</span>
                 </a>
@@ -116,7 +101,6 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>-->
-
                     </div>
                 </div>
             </li>
@@ -317,125 +301,109 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="margin-bottom: 20px">
-                    <div class="row justify-content-center">
-                        <div class="wrapper">
-                            <div class="form-inner" style="height: auto;">
-                                <form id="create-form" action="process-ticket.php" method="POST">
-                                    <h4>Criar Ingressos</h4>
-                                    <div id="tickets-container">
-                                        <!-- Campos para criar ingressos -->
-                                        <div class="ticket">
+                <div class="container-fluid">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="wrapper" style="margin-bottom: 30px;">
+                                <div class="form-inner" style="height: auto;">
+                                    <form class="login" action="process-event.php" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="tenant_id" value="<?php echo $_SESSION['tenant_id']; ?>">
 
-                                            <input type="text" name="ingressos[0][nome_ingresso]" placeholder="Nome ingresso" required>
-                                            <br>Data de Início <input type="datetime-local" name="ingressos[0][start_date]" placeholder="Data de início">
-                                            <br>Data de Abertura Portões <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de Abertura Portões">
-
-                                            <h4 style="margin-top: 20px;">Criar Lotes do ingresso</h4>
-                                            <div class="lots-container">
-                                                <div class="lot">
-
-                                                    <input type="text" name="ingressos[0][lotes][0][nome_lote]" placeholder="Nome lote" required>
-                                                    <input type="text" name="ingressos[0][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
-                                                    <input type="number" name="ingressos[0][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-                                                    <input type="text" name="ingressos[0][lotes][0][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
-                                                </div>
-                                            </div>
-                                            <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
+                                        <div class="field">
+                                            <input type="text" name="title" placeholder="Qual o nome do evento?" required>
                                         </div>
-                                    </div>
-                                    <button class="custom-button" type="button" id="add-ticket">Adicionar Ingresso</button>
-                                    <button class="custom-button" type="submit">Criar Ingressos e Lotes</button>
-                                </form>
+
+                                        <div class="field">
+                                            <input type="text" name="description" placeholder="Descreva o evento" required>
+
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="category" placeholder="Qual será a categoria do evento?" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="nome-local" placeholder="Qual o nome do local?" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="datetime-local" name="data_hour" placeholder="Qual o dia e a hora do evento?" required>
+                                        </div>
+
+                                        <div class="field" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <input type="text" name="local_cep" id="local_cep" placeholder="CEP" pattern="[0-9]{8}" required style="flex: 1; margin-right: 10px;">
+                                            <button type="button" onclick="consultarCEP()" class="btn-primary" style="border-radius: 5px; width: 40px; height: 40px;"><i class="fas fa-search"></i></button>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="local_street" id="local_street" placeholder="Rua do evento" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="local_neighborhood" id="local_neighborhood" placeholder="Bairro do evento" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="local_city" id="local_city" placeholder="Cidade" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="local_uf" id="local_uf" placeholder="UF" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="local_number" placeholder="Número" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="text" name="complement" placeholder="Complemento">
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="file" name="image_event" accept="image/*" required>
+                                        </div>
+
+                                        <div class="field">
+                                            <input type="submit" value="Criar evento">
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <script>
-                    document.getElementById('add-ticket').addEventListener('click', function() {
-                        var ticketsContainer = document.getElementById('tickets-container');
-                        var ticketCount = ticketsContainer.querySelectorAll('.ticket').length;
-
-                        var newTicket = document.createElement('div');
-                        newTicket.classList.add('ticket');
-                        newTicket.innerHTML = `
-        
-        <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" placeholder="Nome ingresso" required>
-        <br>Data de Início <input type="datetime-local" name="ingressos[${ticketCount}][start_date]">
-        <br>Data de Abertura Portões <input type="datetime-local" name="ingressos[${ticketCount}][end_date]">
-
-        <div class="lots-container" style="margin-top: 10px;">
-            <div class="lot">
-                <input type="text" name="ingressos[${ticketCount}][lotes][0][nome_lote]" placeholder="Nome lote" required>
-                <input type="text" name="ingressos[${ticketCount}][lotes][0][valor_ingresso]" placeholder="Valor do ingresso" required>
-                <input type="number" name="ingressos[${ticketCount}][lotes][0][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-                <input type="text" name="ingressos[${ticketCount}][lotes][0][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
-            </div>
-        </div>
-        <button class="custom-button add-lot" type="button" class="add-lot">Adicionar Lote</button>
-        <button class="custom-button delete-ticket" type="button" class="delete-ticket">Excluir Ingresso</button>
-    `;
-                        ticketsContainer.appendChild(newTicket);
-                    });
-
-                    document.addEventListener('click', function(e) {
-                        if (e.target && e.target.classList.contains('add-lot')) {
-                            var ticketContainer = e.target.closest('.ticket');
-                            var lotsContainer = ticketContainer.querySelector('.lots-container');
-                            var lotCount = lotsContainer.querySelectorAll('.lot').length;
-
-                            // Get the ticket index
-                            var ticketIndex = Array.from(ticketContainer.parentNode.children).indexOf(ticketContainer);
-
-                            var newLot = document.createElement('div');
-                            newLot.classList.add('lot');
-                            newLot.innerHTML = `
-            
-            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][nome_lote]" placeholder=" Nome do lote" required>
-           
-           
-            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][valor_ingresso]" placeholder="Valor do ingresso" required>
-            
-            <input type="number" name="ingressos[${ticketIndex}][lotes][${lotCount}][quantidade_ingresso]" placeholder="Quantidade ingresso" required>
-            <input type="text" name="ingressos[${ticketIndex}][lotes][${lotCount}][taxa_valor_ingresso]" placeholder="Quantos % será a taxa?" required>
-            <button class="custom-button delete-lot" type="button" class="delete-lot">Excluir Lote</button>
-        `;
-                            lotsContainer.appendChild(newLot);
-                        } else if (e.target && e.target.classList.contains('delete-ticket')) {
-                            var ticketContainer = e.target.closest('.ticket');
-                            ticketContainer.remove();
-                        } else if (e.target && e.target.classList.contains('delete-lot')) {
-                            var lotContainer = e.target.closest('.lot');
-                            lotContainer.remove();
-                        }
-                    });
-                </script>
 
 
+                    <!-- End of Main Content -->
 
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Marco Nascimento</span>
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Marco Nascimento</span>
+                            </div>
                         </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
+                    </footer>
+                    <!-- End of Footer -->
 
-            </div>
-            <!-- End of Content Wrapper -->
+                </div>
+                <!-- End of Content Wrapper -->
 
-            <script src="../vendor/jquery/jquery.min.js"></script>
-            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="../js/sb-admin-2.min.js"></script>
-            <script src="../vendor/chart.js/Chart.min.js"></script>
-            <script src="../js/demo/chart-area-demo.js"></script>
-            <script src="../js/demo/chart-pie-demo.js"></script>
+                <!-- Bootstrap core JavaScript-->
+                <script src="../vendor/jquery/jquery.min.js"></script>
+                <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Core plugin JavaScript-->
+                <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- Custom scripts for all pages-->
+                <script src="../js/sb-admin-2.min.js"></script>
+
+                <!-- Page level plugins -->
+                <script src="../vendor/chart.js/Chart.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="../js/demo/chart-area-demo.js"></script>
+                <script src="../js/demo/chart-pie-demo.js"></script>
 
 
 </body>

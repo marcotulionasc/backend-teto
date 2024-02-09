@@ -7,7 +7,6 @@
 * PROPRIEDADE CONFIDENCIAL, NÃO PUBLICADA DE MARCO NASCIMENTO
 */
 
-
 session_start();
 require_once('conn.php');
 
@@ -34,6 +33,39 @@ $tenant_id = $_SESSION['tenant_id'];
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+
+    <style>
+        .row-custom {
+            display: flex;
+        }
+
+        .column-custom {
+            flex: 1;
+            margin: 0 10px;
+            /* Ajuste o espaçamento entre as colunas conforme necessário */
+        }
+
+        .field {
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .wrapper-custom {
+           
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra com 10px de desfoque */
+            padding: 20px;
+            margin: 20px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -93,10 +125,10 @@ $tenant_id = $_SESSION['tenant_id'];
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar Evento</a>
                         <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
-                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>-->
+                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
-                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
+                        <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>-->
                     </div>
                 </div>
             </li>
@@ -300,68 +332,69 @@ $tenant_id = $_SESSION['tenant_id'];
                 <div class="container-fluid">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="wrapper" style="margin-bottom: 30px;">
-                                <div class="form-inner" style="height: auto;">
+                            <div class="wrapper-custom" style="margin-bottom: 30px; width: 3000px;">
+                            <h2>Criar Evento</h2>
+
+                                <div class="form-inner" style="height: auto;"> 
                                     <form class="login" action="process-event.php" method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="tenant_id" value="<?php echo $_SESSION['tenant_id']; ?>">
+                                        <div class="row-custom">
+                                            <div class="column-custom">
+                                                <div class="field">
+                                                    <input type="text" name="title" placeholder="Qual o nome do evento?" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="description" placeholder="Descreva o evento" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="category" placeholder="Qual será a categoria do evento?" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="nome-local" placeholder="Qual o nome do local?" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="datetime-local" name="data_hour" placeholder="Qual o dia e a hora do evento?" required>
+                                                </div>
+                                            </div>
+                                            <div class="column-custom">
+                                                <div class="field">
+                                                    <input type="text" name="local_cep" id="local_cep" placeholder="CEP" pattern="[0-9]{8}" required>
+                                                    
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="local_street" id="local_street" placeholder="Rua do evento" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="local_neighborhood" id="local_neighborhood" placeholder="Bairro do evento" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="local_city" id="local_city" placeholder="Cidade" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="local_uf" id="local_uf" placeholder="UF" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="local_number" placeholder="Número" required>
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="complement" placeholder="Complemento">
+                                                </div>
+                                                <div class="field">
+                                                    <input type="file" name="image_event" accept="image/*" required>
+                                                </div>
+                                                <div class="field">
+                                                    <button style="width: 300px;" type="submit" class="btn-primary"><i class="fas fa-arrow-right"> </i>  Criar evento</button>
+                                                    <!-- <input type="submit" value="Criar evento"> -->
+                                                </div>
+                                            </div>
 
-                                        <div class="field">
-                                            <input type="text" name="title" placeholder="Qual o nome do evento?" required>
+                                            <div class="column-custom">
+                                                <div class="field">
+                                                    <button type="button" class="btn-primary" onclick="consultarCEP()"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div class="field">
-                                            <input type="text" name="description" placeholder="Descreva o evento" required>
-
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="category" placeholder="Qual será a categoria do evento?" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="nome-local" placeholder="Qual o nome do local?" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="datetime-local" name="data_hour" placeholder="Qual o dia e a hora do evento?" required>
-                                        </div>
-
-                                        <div class="field" style="display: flex; justify-content: space-between; align-items: center;">
-                                            <input type="text" name="local_cep" id="local_cep" placeholder="CEP" pattern="[0-9]{8}" required style="flex: 1; margin-right: 10px;">
-                                            <button type="button" onclick="consultarCEP()" class="btn-primary" style="border-radius: 5px; width: 40px; height: 40px;"><i class="fas fa-search"></i></button>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_street" id="local_street" placeholder="Rua do evento" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_neighborhood" id="local_neighborhood" placeholder="Bairro do evento" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_city" id="local_city" placeholder="Cidade" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_uf" id="local_uf" placeholder="UF" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="local_number" placeholder="Número" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="text" name="complement" placeholder="Complemento">
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="file" name="image_event" accept="image/*" required>
-                                        </div>
-
-                                        <div class="field">
-                                            <input type="submit" value="Criar evento">
-                                        </div>
                                     </form>
                                 </div>
                             </div>
