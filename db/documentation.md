@@ -1,8 +1,9 @@
-# Table ingressos
-- O campo data-fim, será refatorado para, data-abertura-portões
+# Table event
 
-
+- Adicionar abertura dos portôes
+  
 # Table config_event
+
 - Genero
 - Valor total evento
 - Limitação ingressos
