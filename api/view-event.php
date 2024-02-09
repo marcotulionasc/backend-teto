@@ -45,6 +45,47 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/card-event.css">
     <link rel="stylesheet" href="../css/card-event-custom.css">
+
+    <style>
+        /* Estilo para a tabela */
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilo para as células da tabela */
+        .table-custom td,
+        .table-custom th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        /* Estilo para as células do cabeçalho */
+        .table-custom th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Estilo para as linhas ímpares */
+        .table-custom tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        /* Estilo para as linhas pares */
+        .table-custom tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        /* Estilo para o hover nas células */
+        .table-custom tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+
 </head>
 
 <body id="page-top">
@@ -103,7 +144,7 @@ $result = $stmt->get_result();
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar Evento</a>
                         <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
-                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
+                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>-->
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
@@ -310,44 +351,35 @@ $result = $stmt->get_result();
                 <!-- Begin Page Content -->
                 <h2 style="margin-left: 20px">Meus eventos</h2>
                 <div class="container px-4 px-lg-5 mt-5">
-                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-4 row-cols-xl-4 justify-content-center">
-                        <?php while ($row = $result->fetch_assoc()) : ?>
-                            <div class="col mb-5">
-                                <div class="card h-100 shadow-lg shadow-lg">
-                                    <!-- Imagem evento
-                                    <input type="hidden" name="image_event" value="<?php echo $row['id_event']; ?>">-->
-                                    <img class="card-img-top" src="data:*/*;base64,<?php echo $row['image_event']; ?>" alt="..." style="max-width: 450px; max-height: 300px;" />
-                                    <!-- Detalhe do evento-->
-                                    <div class="card-body p-4">
-                                        <div class="text-center">
-                                            <h5 class="fw-bolder">
-                                                <?php echo $row['title']; ?>
-                                            </h5>
-                                            <i class="fas fa-calendar" style="font-size: smaller;"></i>
-                                            <label style="font-size: smaller;">
-                                                <?php echo $row['date_hour']; ?>
-                                            </label> <br>
 
-                                            <label style="font-size: smaller;">
-                                                <i class="fas fa-map-marker-alt" style="font-size: smaller;"></i> <?php echo $row['local_name']; ?>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer p-1 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center text-black"><a class="btn btn-outline-danger btn-sm mt-auto text-black" href="process-inactive.php?id=<?php echo $row['id_event']; ?>">Desativar evento</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="event-details.php?id=<?php echo $row['id_event']; ?>">Ver mais</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endwhile; ?>
-                    </div>
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Imagem</th>
+                                <th>Título</th>
+                                <th>Data/Hora</th>
+                                <th>Local</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()) : ?>
+                                <tr>
+                                    <td><img src="data:*/*;base64,<?php echo $row['image_event']; ?>" alt="..." style="max-width: 100px; max-height: 100px;" /></td>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['date_hour']; ?></td>
+                                    <td><?php echo $row['local_name']; ?></td>
+                                    <td>
+                                        <a class="btn btn-outline-danger" style="width: 100px;" href="process-inactive.php?id=<?php echo $row['id_event']; ?>">Desativar</a>
+                                        <hr>
+                                        <a class="btn btn-outline-dark" style="width: 100px;" href="event-details.php?id=<?php echo $row['id_event']; ?>">Detalhes</a>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 </div>
+
                 <!-- End of Main Content -->
 
                 <!-- Footer -->

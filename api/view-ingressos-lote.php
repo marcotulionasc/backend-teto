@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
 
     <style>
         .event-details {
-            width: 80%;
+            width: 98%;
             margin: auto;
             padding: 20px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -88,6 +88,45 @@ if ($result->num_rows > 0) {
             font-size: 1em;
             color: #555;
         }
+
+        /* Estilo para a tabela */
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilo para as células da tabela */
+        .table-custom td,
+        .table-custom th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        /* Estilo para as células do cabeçalho */
+        .table-custom th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        /* Estilo para as linhas ímpares */
+        .table-custom tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        /* Estilo para as linhas pares */
+        .table-custom tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        /* Estilo para o hover nas células */
+        .table-custom tr:hover {
+            background-color: #f2f2f2;
+        }
+
+
     </style>
 </head>
 
@@ -147,7 +186,7 @@ if ($result->num_rows > 0) {
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar Evento</a>
                         <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
-                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
+                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>-->
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
@@ -353,38 +392,55 @@ if ($result->num_rows > 0) {
 
                 <div class="event-details" style="margin-bottom: 20px">
                     <h2 class="event-title">Detalhes dos ingressos e lotes</h2>
-                    <?php
-                    foreach ($rows as $row) {
-                        echo '<hr class="sidebar-divider">';
-                        echo '<p class="event-info"><strong>Nome ingresso: </strong>' . $row['nome_ingresso'] . '</p>';
-                        echo '<p class="event-info"><strong>Código ingresso: </strong>' . $row['id_ingresso'] . '</p>';
-                        echo '<p class="event-info"><strong>Status ingresso: </strong>';
-                        echo $row['ingresso_ativo'] == 1 ? 'Ativo' : 'Inativo';
-                        echo '</p>';
-                        echo '<p class="event-info"><strong>Data início: </strong>' . $row['start_date'] . '</p>';
-                        echo '<p class="event-info"><strong>Data fim: </strong>' . $row['end_date'] . '</p>';
-                        echo '<p class="event-info"><strong>Nome lote: </strong>' . $row['nome_lote'] . '</p>';
-                        echo '<p class="event-info"><strong>Código lote: </strong>' . $row['id_lote'] . '</p>';
-                        echo '<p class="event-info"><strong>Status lote: </strong>';
-                        echo $row['lote_ativo'] == 1 ? 'Ativo' : 'Inativo';
-                        echo '</p>';
-                        echo '<p class="event-info"><strong>Valor: </strong>R$ ' . $row['valor_ingresso'] . '</p>';
-                        echo '<p class="event-info"><strong>Quantidade </strong>' . $row['quantidade_ingresso'] . '</p>';
-                        echo '<p class="event-info"><strong>Taxa valor do ingresso: </strong>' . $row['taxa_valor_ingresso'] . '%</p>';
+                    <p></p>
 
-                        $valor_ingresso = $row['valor_ingresso'];
-                        $taxa_valor_ingresso = $row['taxa_valor_ingresso'];
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Código do Ingresso</th>
+                                <th>Nome do Ingresso</th>
+                                <th>Status do Ingresso</th>
+                                <th>Data de Início</th>
+                                <th>Data de Abertura Portões</th>
+                                <th>Código do Lote</th>
+                                <th>Nome do Lote</th>
+                                <th>Status do Lote</th>
+                                <th>Valor do Ingresso</th>
+                                <th>Quantidade de Ingressos</th>
+                                <th>Taxa sobre o Valor do Ingresso</th>
+                               <!-- <th>Valor Total (Ingresso + Taxa)</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($rows as $row) {
+                                echo '<tr>';
+                                echo '<td>' . $row['id_ingresso'] . '</td>';
+                                echo '<td>' . $row['nome_ingresso'] . '</td>';
+                                echo '<td>' . ($row['ingresso_ativo'] == 1 ? 'Ativo' : 'Inativo') . '</td>';
+                                echo '<td>' . $row['start_date'] . '</td>';
+                                echo '<td>' . $row['end_date'] . '</td>';
+                                echo '<td>' . $row['id_lote'] . '</td>';
+                                echo '<td>' . $row['nome_lote'] . '</td>';
+                                echo '<td>' . ($row['lote_ativo'] == 1 ? 'Ativo' : 'Inativo') . '</td>';
+                                echo '<td>R$ ' . $row['valor_ingresso'] . '</td>';
+                                echo '<td>' . $row['quantidade_ingresso'] . '</td>';
+                                echo '<td>' . $row['taxa_valor_ingresso'] . '%</td>';
 
-                        // Calcular o valor total
-                        $valor_total = $valor_ingresso + ($valor_ingresso * $taxa_valor_ingresso / 100);
+                                // Calcular o valor total
+                                $valor_ingresso = $row['valor_ingresso'];
+                                $taxa_valor_ingresso = $row['taxa_valor_ingresso'];
+                                $valor_total = $valor_ingresso + ($valor_ingresso * $taxa_valor_ingresso / 100);
 
-                        echo '<p class="event-info"><strong>Valor total (ingresso + taxa): </strong>R$ ' . $valor_total . '</p>';
-                    }
-                    ?>
-
-
+                                //echo '<td>R$ ' . $valor_total . '</td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
 
                 </div>
+
             </div>
             <!-- End of Main Content -->
 

@@ -112,7 +112,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar Evento</a>
                         <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
-                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
+                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>-->
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
@@ -329,7 +329,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
 
                                             <input type="text" name="ingressos[0][nome_ingresso]" placeholder="Nome ingresso" required>
                                             <br>Data de Início <input type="datetime-local" name="ingressos[0][start_date]" placeholder="Data de início">
-                                            <br>Data de Fim <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de fim">
+                                            <br>Data de Abertura Portões <input type="datetime-local" name="ingressos[0][end_date]" placeholder="Data de Abertura Portões">
 
                                             <h4 style="margin-top: 20px;">Criar Lotes do ingresso</h4>
                                             <div class="lots-container">
@@ -363,7 +363,7 @@ if (session_id() == '' || !isset($_SESSION['id_event'])) {
         
         <input type="text" name="ingressos[${ticketCount}][nome_ingresso]" placeholder="Nome ingresso" required>
         <br>Data de Início <input type="datetime-local" name="ingressos[${ticketCount}][start_date]">
-        <br>Data de Fim <input type="datetime-local" name="ingressos[${ticketCount}][end_date]">
+        <br>Data de Abertura Portões <input type="datetime-local" name="ingressos[${ticketCount}][end_date]">
 
         <div class="lots-container" style="margin-top: 10px;">
             <div class="lot">

@@ -75,6 +75,12 @@ if ($result->num_rows > 0) {
             font-size: 1em;
             color: #555;
         }
+
+
+        
+
+
+
     </style>
 </head>
 
@@ -134,7 +140,7 @@ if ($result->num_rows > 0) {
                         <h6 class="collapse-header">Telas</h6>
                         <a class="collapse-item" href="create-event.php">Criar Evento</a>
                         <a class="collapse-item" href="view-event.php">Gestão de Eventos</a>
-                        <a class="collapse-item" href="delete-event.php">Excluir Evento</a>
+                        <!--<a class="collapse-item" href="delete-event.php">Excluir Evento</a>-->
                         <a class="collapse-item" href="#">Validar cadastro usuário</a>
                         <a class="collapse-item" href="#">Cadastro Promoter</a>
                         <a class="collapse-item" href="https://ticket-example-pi.vercel.app/">QR Code ingressos</a>
@@ -339,51 +345,53 @@ if ($result->num_rows > 0) {
                 <!-- End of Topbar -->
 
                 <div class="event-details" style="margin-bottom: 20px">
-                    <img class="event-image" src=data:*/*;base64,<?php echo $row['image_event']; ?> style="width: 250px; margin-left 30px" />
-                    <h2 class="event-title" style="margin-left: 20px;"><?php echo $row['title']; ?></h2>
+                    <div style="text-align: center;">
+                        <img class="event-image" src="data:*/*;base64,<?php echo $row['image_event']; ?>" style="width: 250px; border: 2px solid #ccc; border-radius: 5px;" />
+                    </div>
+                    <h2 class="event-title" style="text-align: center; margin-top: 20px;"><?php echo $row['title']; ?></h2>
                     <hr class="sidebar-divider">
-                    <h3 class="event-info"> Código evento: <?php echo $row['id_event']; ?></h3>
 
-                    <p class="event-info"><strong>Data e hora: </strong><?php echo $row['date_hour']; ?></p>
-                    <p class="event-info"><strong>CEP: </strong><?php echo $row['local_cep']; ?></p>
-                    <p class="event-info"><strong>Cidade: </strong><?php echo $row['local_city']; ?>, <?php echo $row['local_uf']; ?></p>
-                    <p class="event-info"><strong>Endereço: </strong><?php echo $row['local_street']; ?>, <?php echo $row['local_neighborhood']; ?>, <?php echo $row['local_number']; ?>, <?php echo $row['complement']; ?> </p>
-                    <p class="event-info"><strong>Nome do local do evento: </strong><?php echo $row['local_name']; ?></p>
-                    <p class="event-info"><strong>Maior de <?php echo $row['category']; ?> anos</strong></p>
-                    <p class="event-info"><strong>Data criação do evento: </strong><?php echo $row['created_at']; ?></p>
-                    <p class="event-info"><strong>Descrição: </strong><?php echo $row['description']; ?></p>
-                    <script>
-                        var statusEvento = <?php echo $row['events_active']; ?>;
-                        var statusTransformado = (statusEvento === 1) ? 'ativo' : 'inativo';
-                        document.write('<p class="event-info"><strong>Status do evento:</strong> ' + statusTransformado + '</p>');
-                    </script>
+                    <div style="margin-left: 20px;">
+                        <h3 class="event-info">Detalhes do Evento</h3>
+                        <p class="event-info"><strong>Código do Evento:</strong> <?php echo $row['id_event']; ?></p>
+                        <p class="event-info"><strong>Data e Hora:</strong> <?php echo $row['date_hour']; ?></p>
+                        <p class="event-info"><strong>CEP:</strong> <?php echo $row['local_cep']; ?></p>
+                        <p class="event-info"><strong>Local:</strong> <?php echo $row['local_name']; ?></p>
+                        <p class="event-info"><strong>Endereço:</strong> <?php echo $row['local_street']; ?>, <?php echo $row['local_neighborhood']; ?>, <?php echo $row['local_number']; ?>, <?php echo $row['complement']; ?></p>
+                        <p class="event-info"><strong>Cidade:</strong> <?php echo $row['local_city']; ?>, <?php echo $row['local_uf']; ?></p>
+                        <p class="event-info"><strong>Faixa Etária:</strong> Maior de <?php echo $row['category']; ?> anos</p>
+                        <p class="event-info"><strong>Status do Evento:</strong> <?php echo ($row['events_active'] === 1) ? 'Ativo' : 'Inativo'; ?></p>
+                        <p class="event-info"><strong>Data de Criação:</strong> <?php echo $row['created_at']; ?></p>
+                        <p class="event-info"><strong>Descrição:</strong> <?php echo $row['description']; ?></p>
+                    </div>
 
-                    <a href="view-ingressos-lote.php?id=<?php echo $row['id_event']; ?>" class="btn btn-primary">Ver ingressos</a>
-
-                </div>
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Marco Nascimento</span>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="view-ingressos-lote.php?id=<?php echo $row['id_event']; ?>" class="btn btn-primary">Ver Ingressos</a>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Marco Nascimento</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
 
-            <!-- End of Content Wrapper -->
+                <!-- End of Content Wrapper -->
 
-            <script src="../vendor/jquery/jquery.min.js"></script>
-            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-            <script src="../js/sb-admin-2.min.js"></script>
-            <script src="../vendor/chart.js/Chart.min.js"></script>
-            <script src="../js/demo/chart-area-demo.js"></script>
-            <script src="../js/demo/chart-pie-demo.js"></script>
+                <script src="../vendor/jquery/jquery.min.js"></script>
+                <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="../js/sb-admin-2.min.js"></script>
+                <script src="../vendor/chart.js/Chart.min.js"></script>
+                <script src="../js/demo/chart-area-demo.js"></script>
+                <script src="../js/demo/chart-pie-demo.js"></script>
 
 
 </body>
